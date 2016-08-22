@@ -1,0 +1,40 @@
+{
+  "name": "urlinate",
+  "version": "1.0.0",
+  "description": "Adds data to a URL",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test node test | tap-difflet && vtest test | tap-difflet && standard",
+    "test-dev": "NODE_ENV=test nodemon test | tap-difflet",
+    "cover": "istanbul cover --report none --print detail test/index.js",
+    "view-cover": "istanbul report html && open ./coverage/index.html",
+    "watch": "nodemon test | tap-difflet",
+    "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vigour-io/urlinate.git"
+  },
+  "keywords": [
+    "json",
+    "query string"
+  ],
+  "author": "Vigour.io <dev@vigour.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vigour-io/urlinate/issues"
+  },
+  "homepage": "https://github.com/vigour-io/urlinate#readme",
+  "contributors": [
+    "Shawn Inder <shawn@vigour.io>"
+  ],
+  "dependencies": {
+    "lodash.isarray": "^4.0.0"
+  },
+  "engines": {},
+  "devDependencies": {
+    "istanbul": "^0.4.4",
+    "standard": "^7.1.2",
+    "tape": "^4.6.0"
+  }
+}
