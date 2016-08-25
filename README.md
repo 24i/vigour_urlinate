@@ -36,4 +36,4 @@ urlinate('cachinate.io', {
 
 ## example
 
-[The avatar example](examples/avatar.js) uses `urlinate` to export a function which accepts the URL of a source image and produces a URL for an avatar based on that image to be created by [imaginate](https://npmjs.org/package/imaginate) and cached by [cachinate](https://npmjs.org/package/cachinate). See how these servers parse the URL produced in [the tests](test/index.js)
+[The avatar example](examples/avatar.js) uses `urlinate` to export a function which accepts the URL of a source image and produces a URL for an avatar based on that image to be created by [imaginate](https://npmjs.com/package/imaginate) and cached by [cachinate](https://npmjs.com/package/cachinate). See how these servers parse the URL produced in [the tests](test/index.js)
