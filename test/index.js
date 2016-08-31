@@ -1,13 +1,13 @@
 'use strict'
 
 const url = require('url')
-const qs = require('qs')
 const test = require('tape')
 const urlinate = require('../')
 
 const urls = require('./urls')
 
 const avatar = require('../examples/avatar')
+const cachinate = require('../examples/cachinate')
 
 const LABEL = 0 // Name the test
 const OBJ = 1 // args parameter
@@ -47,42 +47,43 @@ test('stringify', function (t) {
 
 test('avatar example', function (t) {
   const avatarURL = avatar(urls.image)
+  // console.log('avatarURL', avatarURL)
   t.comment('length of produced url ' + avatarURL.length)
 
   // Let's verify that this will be parsable in the way we expect it to be
 
-  const cachinateQuery = qs.parse(url.parse(avatarURL).query)
+  const cachinateQuery = urlinate.parse(url.parse(avatarURL).query)
+  // console.log('cachinateQuery', cachinateQuery)
   t.equal(parseInt(cachinateQuery.duration, 10), 604800, 'correct cache duration for produced image')
 
-  const imaginateQuery = qs.parse(url.parse(cachinateQuery.asset).query)
+  const imaginateQuery = urlinate.parse(url.parse(cachinateQuery.asset).query)
+  // console.log('imaginateQuery', imaginateQuery)
 
-  const inputQuery = qs.parse(url.parse(imaginateQuery.input).query)
+  const inputQuery = urlinate.parse(url.parse(imaginateQuery.input).query)
+  // console.log('inputQuery', inputQuery)
   t.equal(inputQuery.asset, urls.image, 'correct source input')
 
-  const parsedUse = qs.parse(imaginateQuery.use)
-  var i = 0
-  var item = parsedUse[i]
-  while (item) {
-    let parsed = qs.parse(item)
-
-    let cachedTransform = url.parse(parsed[0])
-    let cachedTransformQuery = qs.parse(cachedTransform.query)
+  const transforms = imaginateQuery.use
+  // console.log('transforms', transforms)
+  for (let i = 0, len = transforms.length; i < len; i += 1) {
+    let cachedTransformQuery = urlinate.parse(url.parse(transforms[i][0]).query)
+    // console.log('cachedTransformQuery', cachedTransformQuery)
     let transform = cachedTransformQuery.asset
+    // console.log('transform', transform)
     t.equal(transform, avatar.obj.asset.$[1].use[i][0].$[1].asset, 'correct transform URL')
 
-    let transformOptions = qs.parse(parsed[1])
+    let transformOptions = transforms[i][1]
+    // console.log('transformOptions', transformOptions)
     if (i === 1) {
       let cachedMask = url.parse(transformOptions.mask)
-      let cachedMaskQuery = qs.parse(cachedMask.query)
+      // console.log('cachedMask', cachedMask)
+      let cachedMaskQuery = urlinate.parse(cachedMask.query)
+      // console.log('cachedMaskQuery', cachedMaskQuery)
       t.equal(cachedMaskQuery.asset, urls.mask, 'correct mask')
     } else {
       t.deepEqual(transformOptions, getTransformOptions(i), 'correct transform options for transform ' + i)
     }
-
-    i += 1
-    item = parsedUse[i]
   }
-
   t.end()
 })
 
@@ -106,3 +107,19 @@ function getTransformOptions (i) {
   }
   throw new Error('This is unexpected')
 }
+
+test('cachinate example', function (t) {
+  const cachinateURL = cachinate(urls.image)
+  // console.log('cachinateURL', cachinateURL)
+  t.comment('length of produced url ' + cachinateURL.length)
+
+  // Let's verify that this will be parsable in the way we expect it to be
+
+  const cachinateQuery = urlinate.parse(url.parse(cachinateURL).query)
+  console.log('cachinateQuery', cachinateQuery)
+  t.equal(parseInt(cachinateQuery.duration, 10), 604800, 'correct cache duration for produced image')
+
+  t.equal(cachinateQuery.asset, urls.image, 'correct asset URL')
+  t.deepEqual(cachinateQuery.headers, cachinate.obj.headers, 'headers are correct')
+  t.end()
+})

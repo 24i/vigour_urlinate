@@ -29,7 +29,10 @@
     "Shawn Inder <shawn@vigour.io>"
   ],
   "dependencies": {
-    "lodash.isarray": "^4.0.0"
+    "is-url": "^1.2.2",
+    "lodash.isarray": "^4.0.0",
+    "lodash.merge": "^4.6.0",
+    "qs": "^6.2.1"
   },
   "engines": {},
   "devDependencies": {
