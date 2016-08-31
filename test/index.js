@@ -116,7 +116,7 @@ test('cachinate example', function (t) {
   // Let's verify that this will be parsable in the way we expect it to be
 
   const cachinateQuery = urlinate.parse(url.parse(cachinateURL).query)
-  console.log('cachinateQuery', cachinateQuery)
+  // console.log('cachinateQuery', cachinateQuery)
   t.equal(parseInt(cachinateQuery.duration, 10), 604800, 'correct cache duration for produced image')
 
   t.equal(cachinateQuery.asset, urls.image, 'correct asset URL')
