@@ -8,7 +8,6 @@
     "test-dev": "NODE_ENV=test nodemon test | tap-difflet",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "view-cover": "istanbul report html && open ./coverage/index.html",
-    "watch": "nodemon test | tap-difflet",
     "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0)"
   },
   "repository": {
