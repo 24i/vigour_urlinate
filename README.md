@@ -34,6 +34,15 @@ urlinate('cachinate.io', {
 // cachinate.io?asset=imaginate.io%3Finput%3Dimgs.io%252Fa.jpg
 ```
 
-## example
+## Why?
 
-[The avatar example](examples/avatar.js) uses `urlinate` to export a function which accepts the URL of a source image and produces a URL for an avatar based on that image to be created by [imaginate](https://npmjs.com/package/imaginate) and cached by [cachinate](https://npmjs.com/package/cachinate). See how these servers parse the URL produced in [the tests](test/index.js)
+This makes it easy to create an ecosystem of chainable HTTP GET APIs. This is useful if, for example, a browser is launching a request for you (from an image tag or css instruction) but you still want to use your API.
+
+#### Services using this kind of API
+
+  - [cachinate](github.com/vigour-io/cachinate)
+  - [imaginate](github.com/vigour-io/imaginate)
+
+#### Example with chaining and nesting
+
+- [The avatar example](examples/avatar.js)
